@@ -1,43 +1,124 @@
-# Astro Starter Kit: Minimal
+# 🌱 Baba - Digital Garden
 
-```sh
-npm create astro@latest -- --template minimal
+Astro-powered digital garden that automatically syncs your Obsidian notes to Vercel.
+
+## 🚀 Quick Start
+
+### Auto-Sync Watcher
+
+Watch for changes in Obsidian and automatically sync to GitHub/Vercel:
+
+```bash
+# Start the watcher
+./watcher-start.sh
+
+# Check status
+./watcher-status.sh
+
+# Stop the watcher
+./watcher-stop.sh
+
+# View live logs
+tail -f sync-watcher.log
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Manual Sync
 
-## 🚀 Project Structure
+If you prefer to sync manually:
 
-Inside of your Astro project, you'll see the following folders and files:
+```bash
+# Copy latest notes from Obsidian
+cp -r /Users/vicuna/home/*.md src/content/notes/
+cp -r /Users/vicuna/home/staff src/content/notes/ 2>/dev/null || true
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+# Commit and push
+git add .
+git commit -m "Update notes"
+git push
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🔧 How It Works
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. **Watcher** monitors `/Users/vicuna/home` for `.md` file changes
+2. Waits **30 seconds** after last change (batches multiple edits)
+3. **Cooldown** of 60 seconds between syncs (prevents spam)
+4. Copies files to `src/content/notes/`
+5. Commits and pushes to GitHub
+6. Vercel auto-deploys (~30 seconds)
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 📊 Watcher Configuration
 
-## 🧞 Commands
+Edit `sync-watcher.sh` to customize:
 
-All commands are run from the root of the project, from a terminal:
+- `SYNC_DELAY=30` - Wait time after detecting changes (seconds)
+- `COOLDOWN=60` - Minimum time between syncs (seconds)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 🌐 URLs
 
-## 👀 Want to learn more?
+- **Production:** https://baba-lnrjxffq7-vicuna-3000.vercel.app
+- **GitHub:** https://github.com/jomavicuna/baba
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 📝 Features
+
+- ✅ Obsidian wikilinks `[[note]]`
+- ✅ Backlinks
+- ✅ Tags
+- ✅ Graph view (D3.js)
+- ✅ Auto-sync from Obsidian
+- ✅ Dark theme
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build
+npm run build
+
+# Preview build
+npm run preview
+```
+
+## 📦 Tech Stack
+
+- **Framework:** Astro 5.x
+- **Deployment:** Vercel
+- **Watcher:** fswatch
+- **Graph:** D3.js
+- **Source:** Obsidian vault
+
+## 🐛 Troubleshooting
+
+**Watcher not starting?**
+```bash
+# Check if already running
+./watcher-status.sh
+
+# Force stop
+./watcher-stop.sh
+
+# Restart
+./watcher-start.sh
+```
+
+**Changes not syncing?**
+```bash
+# Check logs
+tail -f sync-watcher.log
+
+# Verify fswatch is installed
+which fswatch
+
+# Manual sync to test
+./watcher-stop.sh
+# Make a change in Obsidian
+./watcher-start.sh
+```
+
+## 📄 License
+
+MIT

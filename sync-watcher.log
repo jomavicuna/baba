@@ -31,3 +31,15 @@
 [2025-10-07 07:51:20] 🔄 Starting sync...
 [2025-10-07 07:51:20] 📝 Copying markdown files...
 [2025-10-07 07:51:20] 📦 Committing changes...
+[2025-10-07 07:51:20] ⬆️  Pushing to GitHub...
+[2025-10-07 07:51:21] ✅ Sync completed successfully!
+[2025-10-07 07:51:21] 📝 Change detected: pagos.md
+[2025-10-07 07:51:21] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 07:51:21] 📝 Change detected: pills.md
+[2025-10-07 07:51:21] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 07:51:35] 📝 Change detected: lights.md
+[2025-10-07 07:51:35] ⏳ Cooldown active, skipping sync (14 seconds since last sync)
+[2025-10-07 07:51:35] 📝 Change detected: menu.md
+[2025-10-07 07:51:35] ⏳ Cooldown active, skipping sync (14 seconds since last sync)
+[2025-10-07 07:51:35] 📝 Change detected: pills.md
+[2025-10-07 07:51:35] ⏳ Cooldown active, skipping sync (14 seconds since last sync)

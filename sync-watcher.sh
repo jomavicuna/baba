@@ -48,9 +48,18 @@ sync_notes() {
 
     # Copy markdown files
     log "📝 Copying markdown files..."
+    # Copy root markdown files
     cp -r "$OBSIDIAN_DIR"/*.md "$CONTENT_DIR/" 2>/dev/null || true
-    cp -r "$OBSIDIAN_DIR"/staff "$CONTENT_DIR/" 2>/dev/null || true
-    cp -r "$OBSIDIAN_DIR"/food "$CONTENT_DIR/" 2>/dev/null || true
+
+    # Copy all subdirectories (excluding system folders)
+    for dir in "$OBSIDIAN_DIR"/*/; do
+        dirname=$(basename "$dir")
+        # Skip system and project folders
+        if [[ "$dirname" != ".obsidian" && "$dirname" != "astro" && "$dirname" != ".git" ]]; then
+            log "  📁 Copying folder: $dirname"
+            cp -r "$dir" "$CONTENT_DIR/" 2>/dev/null || true
+        fi
+    done
 
     # Check if there are changes
     if [ -z "$(git status --porcelain)" ]; then

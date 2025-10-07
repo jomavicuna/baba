@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allNotes = await getCollection('notes');
+
+// Group notes by folder
+const notesByFolder = allNotes.reduce((acc, note) => {
+  const parts = note.id.split('/');
+  const folder = parts.length > 1 ? parts[0] : 'Root';
+  if (!acc[folder]) acc[folder] = [];
+  acc[folder].push(note);
+  return acc;
+}, {} as Record<string, typeof allNotes>);
+
+// Sort folders and notes
+const sortedFolders = Object.entries(notesByFolder).sort(([a], [b]) => a.localeCompare(b));
+---
+
+<BaseLayout title="All Notes">
+  <h1>All Notes ({allNotes.length})</h1>
+
+  {sortedFolders.map(([folder, notes]) => (
+    <div>
+      <h2>{folder}</h2>
+      <ul>
+        {notes
+          .sort((a, b) => a.id.localeCompare(b.id))
+          .map(note => (
+            <li>
+              <a href={`/notes/${note.id.replace('.md', '')}`}>
+                {note.data.title || note.id.replace('.md', '').split('/').pop()}
+              </a>
+              {note.data.tags && note.data.tags.length > 0 && (
+                <span style="margin-left: 1rem; opacity: 0.6; font-size: 0.9em;">
+                  {note.data.tags.map(tag => `#${tag}`).join(' ')}
+                </span>
+              )}
+            </li>
+          ))}
+      </ul>
+    </div>
+  ))}
+</BaseLayout>

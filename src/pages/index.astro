@@ -1,16 +1,31 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+const allNotes = await getCollection('notes');
+const recentNotes = allNotes
+  .sort((a, b) => {
+    const dateA = a.data.updated || a.data.created || new Date(0);
+    const dateB = b.data.updated || b.data.created || new Date(0);
+    return dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 10);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <h1>🌱 Digital Garden</h1>
+  <p>Welcome to my digital garden. This is a collection of my notes and thoughts.</p>
+
+  <h2>Recent Notes</h2>
+  <ul>
+    {recentNotes.map(note => (
+      <li>
+        <a href={`/notes/${note.id.replace('.md', '')}`}>
+          {note.data.title || note.id.replace('.md', '')}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <p><a href="/notes">→ View all notes ({allNotes.length})</a></p>
+</BaseLayout>

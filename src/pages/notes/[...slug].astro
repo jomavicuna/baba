@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map(note => ({
+    params: { slug: note.id.replace('.md', '') },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+
+// Get all notes to find backlinks
+const allNotes = await getCollection('notes');
+
+// Find backlinks (notes that link to this note)
+const currentNoteTitle = note.data.title || note.id.replace('.md', '');
+const backlinks = allNotes.filter(n => {
+  if (n.id === note.id) return false;
+  const content = n.body || '';
+  // Check for wikilinks [[title]]
+  return content.includes(`[[${currentNoteTitle}]]`) ||
+         content.includes(`[[${note.id.replace('.md', '')}]]`);
+});
+---
+
+<BaseLayout title={note.data.title || note.id}>
+  <article>
+    <h1>{note.data.title || note.id.replace('.md', '')}</h1>
+
+    {note.data.tags && note.data.tags.length > 0 && (
+      <div class="tags">
+        {note.data.tags.map(tag => (
+          <span class="tag">#{tag}</span>
+        ))}
+      </div>
+    )}
+
+    <Content />
+
+    {backlinks.length > 0 && (
+      <div class="backlinks">
+        <h2>Backlinks ({backlinks.length})</h2>
+        <ul>
+          {backlinks.map(link => (
+            <li>
+              <a href={`/notes/${link.id.replace('.md', '')}`}>
+                {link.data.title || link.id.replace('.md', '')}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </article>
+</BaseLayout>

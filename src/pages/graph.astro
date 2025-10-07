@@ -42,10 +42,11 @@ const graphData = { nodes, links };
   <h1>Graph View</h1>
   <p>Interactive visualization of note connections</p>
 
-  <div id="graph"></div>
+  <div id="graph" data-graph={JSON.stringify(graphData)}></div>
 
-  <script define:vars={{ graphData }}>
-    import * as d3 from 'd3';
+  <script>
+    import('https://cdn.jsdelivr.net/npm/d3@7/+esm').then(({ default: d3 }) => {
+    const graphData = JSON.parse(document.getElementById('graph').dataset.graph);
 
     const width = Math.min(window.innerWidth - 100, 1200);
     const height = 600;
@@ -125,6 +126,7 @@ const graphData = { nodes, links };
       event.subject.fx = null;
       event.subject.fy = null;
     }
+    });
   </script>
 
   <style>

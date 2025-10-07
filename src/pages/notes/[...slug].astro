@@ -1,29 +1,29 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes');
   return notes.map(note => ({
-    params: { slug: note.id.replace('.md', '') },
+    params: { slug: note.id },
     props: { note },
   }));
 }
 
 const { note } = Astro.props;
-const { Content } = await note.render();
+const { Content } = await render(note);
 
 // Get all notes to find backlinks
 const allNotes = await getCollection('notes');
 
 // Find backlinks (notes that link to this note)
-const currentNoteTitle = note.data.title || note.id.replace('.md', '');
+const currentNoteTitle = note.data.title || note.id;
 const backlinks = allNotes.filter(n => {
   if (n.id === note.id) return false;
   const content = n.body || '';
   // Check for wikilinks [[title]]
   return content.includes(`[[${currentNoteTitle}]]`) ||
-         content.includes(`[[${note.id.replace('.md', '')}]]`);
+         content.includes(`[[${note.id}]]`);
 });
 ---
 
@@ -47,8 +47,8 @@ const backlinks = allNotes.filter(n => {
         <ul>
           {backlinks.map(link => (
             <li>
-              <a href={`/notes/${link.id.replace('.md', '')}`}>
-                {link.data.title || link.id.replace('.md', '')}
+              <a href={`/notes/${link.id}`}>
+                {link.data.title || link.id}
               </a>
             </li>
           ))}

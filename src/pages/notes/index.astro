@@ -28,8 +28,8 @@ const sortedFolders = Object.entries(notesByFolder).sort(([a], [b]) => a.localeC
           .sort((a, b) => a.id.localeCompare(b.id))
           .map(note => (
             <li>
-              <a href={`/notes/${note.id.replace('.md', '')}`}>
-                {note.data.title || note.id.replace('.md', '').split('/').pop()}
+              <a href={`/notes/${note.id}`}>
+                {note.data.title || note.id.split('/').pop()}
               </a>
               {note.data.tags && note.data.tags.length > 0 && (
                 <span style="margin-left: 1rem; opacity: 0.6; font-size: 0.9em;">

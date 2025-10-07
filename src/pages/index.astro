@@ -20,8 +20,8 @@ const recentNotes = allNotes
   <ul>
     {recentNotes.map(note => (
       <li>
-        <a href={`/notes/${note.id.replace('.md', '')}`}>
-          {note.data.title || note.id.replace('.md', '')}
+        <a href={`/notes/${note.id}`}>
+          {note.data.title || note.id}
         </a>
       </li>
     ))}

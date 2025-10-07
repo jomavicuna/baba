@@ -6,8 +6,8 @@ const allNotes = await getCollection('notes');
 
 // Build graph data
 const nodes = allNotes.map(note => ({
-  id: note.id.replace('.md', ''),
-  title: note.data.title || note.id.replace('.md', ''),
+  id: note.id,
+  title: note.data.title || note.id,
   tags: note.data.tags || [],
 }));
 
@@ -23,13 +23,13 @@ allNotes.forEach(note => {
     const targetTitle = match[1];
     const targetNote = allNotes.find(n =>
       (n.data.title === targetTitle) ||
-      n.id.replace('.md', '') === targetTitle
+      n.id === targetTitle
     );
 
     if (targetNote) {
       links.push({
-        source: note.id.replace('.md', ''),
-        target: targetNote.id.replace('.md', ''),
+        source: note.id,
+        target: targetNote.id,
       });
     }
   }

@@ -135,3 +135,23 @@
 [2025-10-07 08:30:56] 🔄 Starting sync...
 [2025-10-07 08:30:56] 📝 Copying markdown files...
 [2025-10-07 08:30:56] 📦 Committing changes...
+[2025-10-07 08:30:56] ⬆️  Pushing to GitHub...
+[2025-10-07 08:30:57] ✅ Sync completed successfully!
+[2025-10-07 08:30:57] 📝 Change detected: menu.md
+[2025-10-07 08:30:57] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 08:30:57] 📝 Change detected: pendientes.md
+[2025-10-07 08:30:57] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 08:30:57] 📝 Change detected: pagos.md
+[2025-10-07 08:30:57] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 08:30:57] 📝 Change detected: pills.md
+[2025-10-07 08:30:57] ⏳ Cooldown active, skipping sync (0 seconds since last sync)
+[2025-10-07 08:31:11] 📝 Change detected: lights.md
+[2025-10-07 08:31:11] ⏳ Cooldown active, skipping sync (14 seconds since last sync)
+[2025-10-07 08:31:11] 📝 Change detected: menu.md
+[2025-10-07 08:31:11] ⏳ Cooldown active, skipping sync (14 seconds since last sync)
+[2025-10-07 08:31:11] 📝 Change detected: pendientes.md
+[2025-10-07 08:31:11] ⏳ Cooldown active, skipping sync (14 seconds since last sync)
+[2025-10-07 16:23:02] 📝 Change detected: .OBSIDIANTEST
+[2025-10-07 16:23:02] 🔄 Starting sync...
+[2025-10-07 16:23:02] 📝 Copying markdown files...
+[2025-10-07 16:23:02] 📦 Committing changes...
